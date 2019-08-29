@@ -26,7 +26,6 @@ import org.spongepowered.api.event.item.inventory.InteractInventoryEvent;
 import org.spongepowered.api.event.item.inventory.InteractItemEvent;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.text.Text;
-import sun.misc.MessageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,12 +41,13 @@ public class NPCEvent {
         this.chat = chat;
     }
 
-    @Listener
-    public void onserverquit(FMLNetworkEvent.ServerConnectionFromClientEvent event , @First Player player){
-        if (chat.getAddcmd().containsKey(player.getUniqueId())){
-            chat.getAddcmd().remove(player.getUniqueId());
-        }
-    }
+    	// You can't do this. This is a Forge event, which does not use @Listener or @First.
+//    @Listener
+//    public void onserverquit(FMLNetworkEvent.ServerConnectionFromClientEvent event , @First Player player){
+//        if (chat.getAddcmd().containsKey(player.getUniqueId())){
+//            chat.getAddcmd().remove(player.getUniqueId());
+//        }
+//    }
     @Listener
     public void OnQuilt(ClientConnectionEvent.Disconnect event, @First Player player){
         if (chat.getAddcmd().containsKey(player.getUniqueId())){
