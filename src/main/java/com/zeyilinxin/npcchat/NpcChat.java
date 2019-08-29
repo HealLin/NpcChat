@@ -5,6 +5,8 @@ import com.google.inject.Inject;
 import com.zeyilinxin.npcchat.Command.NpcChatCommand;
 import com.zeyilinxin.npcchat.Event.NPCEvent;
 import com.zeyilinxin.npcchat.Utils.MePleaceholder;
+
+import net.minecraftforge.common.MinecraftForge;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
 import org.spongepowered.api.Sponge;
@@ -25,7 +27,7 @@ import java.util.*;
 * #I am also the first open source project and the first public project.
 * Authors:择忆霖心
 * */
-@Plugin(id = "npcchat", name = "NpcChat", authors = { "择忆霖心" },version = "1.5.7", description = "口袋妖怪排位")
+@Plugin(id = "npcchat", name = "NpcChat", authors = { "择忆霖心" },version = "1.5.8", description = "口袋妖怪排位")
 public class NpcChat {
 
     private final Map<UUID, String> addcmd = new HashMap<>();
@@ -58,7 +60,10 @@ public class NpcChat {
             this.getServerConsole().sendMessage(Text.of("检测到有placeholderapi已经开启变量"));
         }
 
-        Sponge.getEventManager().registerListeners(this, new NPCEvent(this));
+        NPCEvent listener = new NPCEvent(this);
+        Sponge.getEventManager().registerListeners(this, listener);
+        MinecraftForge.EVENT_BUS.register(listener);
+        
         NpcChatCommand jlCommand = new NpcChatCommand(this);
         CommandSpec createcmd = CommandSpec.builder()
                 .permission("npcchat.create.use")

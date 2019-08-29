@@ -1,5 +1,15 @@
 package com.zeyilinxin.npcchat.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import org.spongepowered.api.Sponge;
+import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.item.inventory.ItemStack;
+
 import com.google.common.reflect.TypeToken;
 import com.pixelmonmod.pixelmon.api.dialogue.Choice;
 import com.pixelmonmod.pixelmon.api.dialogue.Dialogue;
@@ -7,25 +17,9 @@ import com.zeyilinxin.npcchat.NpcChat;
 import com.zeyilinxin.npcchat.api.Requirements.RequirementsUtlis;
 import com.zeyilinxin.npcchat.api.button.utils.ButtonUtils;
 import com.zeyilinxin.npcchat.api.permission.DialogPermission;
-import com.zeyilinxin.npcchat.interfaceclass.PermissionInterface;
-import me.lucko.luckperms.api.LuckPermsApi;
-import me.rojo8399.placeholderapi.Placeholder;
-import me.rojo8399.placeholderapi.PlaceholderService;
-import me.rojo8399.placeholderapi.impl.PlaceholderAPIPlugin;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.server.MinecraftServer;
+
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import ninja.leaping.configurate.objectmapping.ObjectMappingException;
-import org.spongepowered.api.Sponge;
-import org.spongepowered.api.command.CommandResult;
-import org.spongepowered.api.data.type.HandTypes;
-import org.spongepowered.api.entity.living.player.Player;
-import org.spongepowered.api.item.inventory.ItemStack;
-import org.spongepowered.api.service.ProviderRegistration;
-import org.spongepowered.api.text.Text;
-
-import java.io.IOException;
-import java.util.*;
 
 /**
  * 该类主要用于处理NpcChat的按钮加载
@@ -168,7 +162,7 @@ public class StringUtils {
                     TimerTask task = new TimerTask() {
                         @Override
                         public void run() {
-                            FMLCommonHandler.instance().getMinecraftServerInstance().func_152344_a(() -> {
+                            FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
                                 if (!cmd.isEmpty() && cmd != null) {
                                     if (cmd.startsWith("[")){
                                         for(String c : cmdList){
@@ -216,7 +210,7 @@ public class StringUtils {
                     TimerTask task = new TimerTask() {
                         @Override
                         public void run() {
-                            FMLCommonHandler.instance().getMinecraftServerInstance().func_152344_a(() -> {
+                            FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
                                 if (!cmd.isEmpty() && cmd != null) {
                                     if (cmd.startsWith("[")){
                                         for(String c : cmdList){
@@ -395,26 +389,26 @@ public class StringUtils {
     }
 
 
-    private boolean getHasPermission(String name, Object b) {
-        boolean hasPermission = false;
-        for (Object p : chat.getConfigurationNode().getNode(new Object[]{"Data" , name , "Button" , b}).getChildrenMap().keySet()){
-            if (p.equals("Permission") || p.equals("permission")){
-                hasPermission = true;
-            }
-            if (p.equals("Requirements") || p.equals("requirements")){
-                setRequirements(true);
-            }
-        }
-        return hasPermission;
-    }
-
-    private void setRequirements(boolean r){
-        this.hasRequirements = r;
-    }
-
-    private boolean getHasRequirements(){
-        return this.hasRequirements;
-    }
+//    private boolean getHasPermission(String name, Object b) {
+//        boolean hasPermission = false;
+//        for (Object p : chat.getConfigurationNode().getNode(new Object[]{"Data" , name , "Button" , b}).getChildrenMap().keySet()){
+//            if (p.equals("Permission") || p.equals("permission")){
+//                hasPermission = true;
+//            }
+//            if (p.equals("Requirements") || p.equals("requirements")){
+//                setRequirements(true);
+//            }
+//        }
+//        return hasPermission;
+//    }
+//
+//    private void setRequirements(boolean r){
+//        this.hasRequirements = r;
+//    }
+//
+//    private boolean getHasRequirements(){
+//        return this.hasRequirements;
+//    }
 
 
 
@@ -438,13 +432,13 @@ public class StringUtils {
     }
 
 
-    private boolean getMainItem(Object name , Object b , ItemStack stack) throws ObjectMappingException {
-        String item = chat.getConfigurationNode().getNode(new Object[]{"Data", name, "Button", b, "Item"}).getString("");
-        if (item != null && !item.isEmpty()){
-            PlayerItemUtils playerItemUtils = new PlayerItemUtils(chat , stack , stack);
-            return playerItemUtils.contrast(item , false);
-        }
-        return true;
-    }
+//    private boolean getMainItem(Object name , Object b , ItemStack stack) throws ObjectMappingException {
+//        String item = chat.getConfigurationNode().getNode(new Object[]{"Data", name, "Button", b, "Item"}).getString("");
+//        if (item != null && !item.isEmpty()){
+//            PlayerItemUtils playerItemUtils = new PlayerItemUtils(chat , stack , stack);
+//            return playerItemUtils.contrast(item , false);
+//        }
+//        return true;
+//    }
 
 }

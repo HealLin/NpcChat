@@ -1,0 +1,87 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+		jcenter()
+		maven {
+			url  "https://jitpack.io"
+		}
+    }
+    dependencies {
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+version = "1.12.2-1.5.8"
+group= "com.zeyilinxin.npcchat"
+archivesBaseName = "NpcChat"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+minecraft {
+    version = "1.12.2-14.23.5.2809"
+    runDir = "run"
+    mappings = "snapshot_20171007"
+    useDepAts = true
+}
+
+dependencies {
+	compile 'org.spongepowered:spongeapi:7.1.0-SNAPSHOT'
+	compile fileTree(dir: 'libs', include: ['*.jar'])
+	compile 'reforged:server:7.0.7@Pixelmon-1.12.2-7.0.7-server.jar'
+}
+
+//Fix forges AT breaking everything because the AT checker is stupid
+[tasks.deobfMcMCP, tasks.deobfMcSRG].each { it.failOnAtError = false }
+
+
+configurations {
+    shade
+    compile.extendsFrom shade
+}
+
+repositories {
+	mavenCentral()
+    maven {
+        url 'http://oss.sonatype.org/content/repositories/snapshots'
+    }
+	mavenCentral()
+    maven {
+        url "http://dvs1.progwml6.com/files/maven"
+    }
+	mavenCentral()
+	maven {
+		url "https://repo.spongepowered.org/maven/"
+	}
+	ivy {
+		url "https://download.nodecdn.net/containers"
+		layout "pattern", {
+			artifact "/[organisation]/[module]/release/[revision]/[ext]"
+		}
+	}
+}
+
+//Fix forges AT breaking everything because the AT checker is stupid
+[tasks.deobfMcMCP, tasks.deobfMcSRG].each { it.failOnAtError = false }
+
+tasks.withType(JavaCompile) { task ->
+    task.options.encoding = 'UTF-8'
+    task.options.fork = true
+}
+
+processResources
+{
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}

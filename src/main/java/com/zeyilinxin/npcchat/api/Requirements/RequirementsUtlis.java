@@ -83,6 +83,24 @@ public class RequirementsUtlis {
             } else {
                 return false;
             }
+        } else if (re.indexOf(">=") == 0){
+            if (service.replacePlaceholders(tmp[0].substring(re.indexOf("%")), (Player)player , player) != null || !service.replacePlaceholders(tmp[0].substring(re.indexOf("%")), (Player)player , player).isEmpty()
+                    ||service.replacePlaceholders(tmp[0].substring(re.indexOf("%")), (Player)player , player).equals("{" + tmp[0].substring(re.indexOf("%")) +  "}")){
+                double term = 0.0;
+                double term2 = 0.0;
+                try {
+                    term = Double.valueOf(service.replacePlaceholders(tmp[0].substring(re.indexOf("%")), (Player)player , player).toPlain());
+                    term2 = Double.valueOf(tmp[1]);
+                } catch (Exception e){
+                    return false;
+                }
+                if (term >= term2){
+                    return true;
+                }
+                return false;
+            } else {
+                return false;
+            }
         } else if (re.indexOf(">") == 0){
             if (service.replacePlaceholders(tmp[0].substring(re.indexOf("%")), (Player)player , player) != null || !service.replacePlaceholders(tmp[0].substring(re.indexOf("%")), (Player)player , player).isEmpty()
                     ||service.replacePlaceholders(tmp[0].substring(re.indexOf("%")), (Player)player , player).equals("{" + tmp[0].substring(re.indexOf("%")) +  "}")){
@@ -102,24 +120,6 @@ public class RequirementsUtlis {
                 return false;
             }
 
-        } else if (re.indexOf(">=") == 0){
-            if (service.replacePlaceholders(tmp[0].substring(re.indexOf("%")), (Player)player , player) != null || !service.replacePlaceholders(tmp[0].substring(re.indexOf("%")), (Player)player , player).isEmpty()
-                    ||service.replacePlaceholders(tmp[0].substring(re.indexOf("%")), (Player)player , player).equals("{" + tmp[0].substring(re.indexOf("%")) +  "}")){
-                double term = 0.0;
-                double term2 = 0.0;
-                try {
-                    term = Double.valueOf(service.replacePlaceholders(tmp[0].substring(re.indexOf("%")), (Player)player , player).toPlain());
-                    term2 = Double.valueOf(tmp[1]);
-                } catch (Exception e){
-                    return false;
-                }
-                if (term >= term2){
-                    return true;
-                }
-                return false;
-            } else {
-                return false;
-            }
         } else {
             return false;
         }
