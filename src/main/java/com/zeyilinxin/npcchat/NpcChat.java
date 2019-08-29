@@ -27,7 +27,7 @@ import java.util.*;
 * #I am also the first open source project and the first public project.
 * Authors:择忆霖心, Hiroku
 * */
-@Plugin(id = "npcchat", name = "NpcChat", authors = { "择忆霖心", "Hiroku" },version = "1.5.8", description = "口袋妖怪排位")
+@Plugin(id = "npcchat", name = "NpcChat", authors = { "择忆霖心", "Hiroku" },version = "1.5.8", description = "npcchat")
 public class NpcChat {
 
     private final Map<UUID, String> addcmd = new HashMap<>();
